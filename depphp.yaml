@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myphp
+spec:
+  selector:
+    matchLabels:
+      env: production
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        env: production
+    spec:
+      containers:
+      - name: html-dep
+        image: rootritesh/webserver-php
+        ports:
+        - containerPort: 80
+        volumeMounts:
+          - name: web
+            mountPath: /var/www/html   
+      volumes:
+      - name: web
+        persistentVolumeClaim:
+          claimName: web
+
+       
+      
